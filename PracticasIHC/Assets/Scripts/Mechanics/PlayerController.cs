@@ -63,6 +63,14 @@ namespace Platformer.Mechanics
                     stopJump = true;
                     Schedule<PlayerStopJump>().player = this;
                 }
+                else if(Input.GetKeyDown(KeyCode.P))
+                {
+                    Pelota pelota = FindObjectOfType<Pelota>();
+                    if (pelota != null)
+                    {
+                        pelota.Kick();
+                    }
+                }
             }
             else
             {
