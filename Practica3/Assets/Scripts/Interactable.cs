@@ -5,6 +5,19 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     protected bool isInsideZone;
+    public GameObject dialog;
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        if (dialog != null)
+        {
+            dialog.SetActive(false);
+        }
+    }
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -26,6 +39,7 @@ public class Interactable : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         Debug.Log("Collision " + other.name);
         isInsideZone = true;
+        if (dialog != null) dialog.SetActive(true);
     }
 
     /// <summary>
@@ -37,6 +51,7 @@ public class Interactable : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         Debug.Log("Collision Exit " + other.name);
         isInsideZone = false;
+        if (dialog != null) dialog.SetActive(false);
     }
 
     protected virtual void Interact()
