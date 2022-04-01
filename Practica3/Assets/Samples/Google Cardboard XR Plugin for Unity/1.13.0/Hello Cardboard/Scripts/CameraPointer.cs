@@ -40,14 +40,18 @@ public class CameraPointer : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, _maxDistance))
         {
+            bool isGazeInteractable = hit.transform.GetComponent<GazeInteractable>() != null;
             // GameObject detected in front of the camera.
-            if (_gazedAtObject != hit.transform.gameObject && hit.transform.GetComponent<ObjectController>() != null)
+            if (_gazedAtObject != hit.transform.gameObject)
             {
                 // New GameObject.
-                _gazedAtObject?.SendMessage("OnPointerExit");
-                _gazedAtObject = hit.transform.gameObject;
-                _gazedAtObject.SendMessage("OnPointerEnter");
-                _timer = 0f;
+                if (isGazeInteractable)
+                {
+                    _gazedAtObject?.SendMessage("OnPointerExit");
+                    _gazedAtObject = hit.transform.gameObject;
+                    _gazedAtObject?.SendMessage("OnPointerEnter");
+                    _timer = 0f;
+                }
             }
             //si estoy viendo el mismo objeto...
             else
